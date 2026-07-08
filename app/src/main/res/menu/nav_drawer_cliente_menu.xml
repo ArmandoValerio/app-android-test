@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/grupo_id"
+        android:checkableBehavior="single">
+
+        <!-- Inicio-->
+        <item
+            android:id="@+id/ap_inicio_c"
+            android:title="@string/ap_inicio_c"
+            android:icon="@drawable/ico_inicio"/>
+
+        <!-- Mi perfil-->
+        <item
+            android:id="@+id/ap_mi_perfil_c"
+            android:title="@string/ap_mi_perfil_c"
+            android:icon="@drawable/ico_mi_perfil"/>
+    </group>
+
+    <!-- Cerrar sesión-->
+    <item
+        android:id="@+id/ap_cerrar_sesion_c"
+        android:title="@string/ap_cerrar_sesion_c"
+        android:icon="@drawable/ico_salir"/>
+
+</menu>

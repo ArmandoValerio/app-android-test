@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "253324276581",
+    "project_id": "tienda-linea-app-9b-avs",
+    "storage_bucket": "tienda-linea-app-9b-avs.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:253324276581:android:4eb396e8f5a61ac428278c",
+        "android_client_info": {
+          "package_name": "com.codeworld.tiendavirtualapp9b_avs"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXuzoabVG-Dz7vSlrlnRAiLnQ0zonUx5M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

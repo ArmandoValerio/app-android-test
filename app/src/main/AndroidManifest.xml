@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/tienda_icono"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/tienda_icono_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.TiendaVirtualApp9BAvs"
+        tools:targetApi="31">
+        <activity
+            android:name=".cliente.RegistroClienteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".cliente.MainActivityCliente"
+            android:exported="false"
+            android:theme="@style/Theme.TiendaVirtualApp9BAvs" />
+        <activity
+            android:name=".vendedor.vendedor.LoginVendedorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".vendedor.vendedor.RegistroVendedorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivityVendedor"
+            android:exported="false" />
+        <activity
+            android:name=".SplashScreenActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

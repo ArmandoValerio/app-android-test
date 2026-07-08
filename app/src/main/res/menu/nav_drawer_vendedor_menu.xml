@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/group_op"
+        android:checkableBehavior="single">
+
+        <!-- Inicio  -->
+        <item
+            android:id="@+id/ap_inicio_v"
+            android:checkable="true"
+            android:enabled="true"
+            android:icon="@drawable/ico_inicio"
+            android:title="@string/ap_inicio_v"
+            android:visible="true" />
+
+        <!-- Mi tienda  -->
+        <item
+            android:id="@+id/ap_mi_tienda_v"
+            android:title="@string/ap_mi_tienda_v"
+            android:icon="@drawable/ico_mi_tienda"/>
+
+        <!-- Reseñas  -->
+        <item
+            android:id="@+id/ap_resenias_v"
+            android:title="@string/ap_resenias_v"
+            android:icon="@drawable/ico_resenias"/>
+
+    </group>
+
+    <item
+        android:id="@+id/ap_cerrar_sesion_v"
+        android:title="@string/ap_cerrar_sesion_v"
+        android:icon="@drawable/ico_salir"/>
+</menu>
