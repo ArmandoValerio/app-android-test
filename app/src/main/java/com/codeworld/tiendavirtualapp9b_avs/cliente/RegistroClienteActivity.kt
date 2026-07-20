@@ -24,5 +24,6 @@ class RegistroClienteActivity : AppCompatActivity() {
         progressDialog = ProgressDialog(this)
         progressDialog.setTitle("Espere accediendo a Firebase")
         progressDialog.setCanceledOnTouchOutside(false)
+
     }
 }

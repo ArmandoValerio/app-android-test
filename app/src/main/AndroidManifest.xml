@@ -15,6 +15,12 @@
         android:theme="@style/Theme.TiendaVirtualApp9BAvs"
         tools:targetApi="31">
         <activity
+            android:name=".SeleccionarTipoMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".cliente.LoginClienteActivity"
+            android:exported="false" />
+        <activity
             android:name=".cliente.RegistroClienteActivity"
             android:exported="false" />
         <activity
