@@ -7,10 +7,12 @@ import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.codeworld.tiendavirtualapp9b_avs.MainActivityVendedor
-import com.codeworld.tiendavirtualapp9b_avs.R
 import com.codeworld.tiendavirtualapp9b_avs.databinding.ActivityLoginVendedorBinding
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class LoginVendedorActivity : AppCompatActivity() {
 
@@ -29,30 +31,31 @@ class LoginVendedorActivity : AppCompatActivity() {
         progressDialog.setTitle("Espere por favor")
         progressDialog.setCanceledOnTouchOutside(false)
 
-        binding.btnLoginV.setOnClickListener{
+        binding.btnLoginV.setOnClickListener {
             validarInformacion()
         }
 
-        binding.tvRegistrarV.setOnClickListener{
+        binding.tvRegistrarV.setOnClickListener {
             startActivity(Intent(applicationContext, RegistroVendedorActivity::class.java))
         }
     }
 
     private var email = ""
     private var password = ""
+
     private fun validarInformacion() {
         email = binding.etEmailV.text.toString().trim()
         password = binding.etPasswordV.text.toString().trim()
 
-        if (email.isEmpty()){
+        if (email.isEmpty()) {
             binding.etEmailV.error = "Ingrese su eMail"
             binding.etEmailV.requestFocus()
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             binding.etEmailV.error = "Email no válido"
             binding.etEmailV.requestFocus()
         } else if (password.isEmpty()) {
             binding.etPasswordV.error = "Ingrese su password"
-            binding.etEmailV.requestFocus()
+            binding.etPasswordV.requestFocus()
         } else {
             LoginVendedor()
         }
@@ -64,16 +67,9 @@ class LoginVendedorActivity : AppCompatActivity() {
 
         firebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                progressDialog.dismiss()
-                startActivity(Intent(this, MainActivityVendedor::class.java))
-                finishAffinity()
-                Toast.makeText(
-                    this,
-                    "Bienvennida(o) usuario tipo vendedor",
-                    Toast.LENGTH_SHORT
-                ).show()
+                comprobarTipoUsuarioVendedor()
             }
-            .addOnFailureListener{ e ->
+            .addOnFailureListener { e ->
                 progressDialog.dismiss()
                 Toast.makeText(
                     this,
@@ -83,5 +79,45 @@ class LoginVendedorActivity : AppCompatActivity() {
             }
     }
 
+    private fun comprobarTipoUsuarioVendedor() {
+        progressDialog.setMessage("Comprobando tipo de usuario")
+        val uid = firebaseAuth.uid!!
 
+        val reference = FirebaseDatabase.getInstance().getReference("Usuarios")
+        reference.child(uid)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    progressDialog.dismiss()
+                    val tipoU = snapshot.child("tipoUsuario").value.toString()
+
+                    if (tipoU == "Vendedor") {
+                        startActivity(Intent(this@LoginVendedorActivity, MainActivityVendedor::class.java))
+                        finishAffinity()
+                        Toast.makeText(
+                            this@LoginVendedorActivity,
+                            "Bienvenida(o) usuario tipo vendedor",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        // Si la cuenta pertenece a un Cliente, se cierra la sesión
+                        firebaseAuth.signOut()
+                        Toast.makeText(
+                            this@LoginVendedorActivity,
+                            "Esta cuenta es de tipo Cliente. Ingrese desde el área de Clientes.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    progressDialog.dismiss()
+                    firebaseAuth.signOut()
+                    Toast.makeText(
+                        this@LoginVendedorActivity,
+                        "Error al consultar usuario: ${error.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            })
+    }
 }

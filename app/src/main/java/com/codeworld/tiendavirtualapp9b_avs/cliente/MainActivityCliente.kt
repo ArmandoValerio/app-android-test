@@ -1,5 +1,6 @@
 package com.codeworld.tiendavirtualapp9b_avs.cliente
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -15,20 +16,24 @@ import com.codeworld.tiendavirtualapp9b_avs.cliente.Nav_Fragments_Cliente.Fragme
 import com.codeworld.tiendavirtualapp9b_avs.cliente.Nav_Fragments_Cliente.FragmentMiPerfilC
 import com.codeworld.tiendavirtualapp9b_avs.databinding.ActivityMainClienteBinding
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 
-class MainActivityCliente : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener {
+class MainActivityCliente : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var binding: ActivityMainClienteBinding
+    private var firebaseAuth: FirebaseAuth? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainClienteBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
+
+        firebaseAuth = FirebaseAuth.getInstance()
+        comprobarSesion()
 
         binding.navigationView.setNavigationItemSelectedListener(this)
 
@@ -44,7 +49,23 @@ class MainActivityCliente : AppCompatActivity() , NavigationView.OnNavigationIte
         toogle.syncState()
 
         replaceFragment(FragmentInicioC())
+        binding.navigationView.setCheckedItem(R.id.ap_inicio_c)
+    }
 
+    private fun cerrarSesion() {
+        firebaseAuth!!.signOut()
+        startActivity(Intent(applicationContext, LoginClienteActivity::class.java))
+        finish()
+        Toast.makeText(applicationContext, "Se cerró la sesión del cliente", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun comprobarSesion() {
+        if (firebaseAuth!!.currentUser == null) {
+            startActivity(Intent(applicationContext, LoginClienteActivity::class.java))
+            finish()
+        } else {
+            Toast.makeText(applicationContext, "Cliente en línea", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -55,7 +76,7 @@ class MainActivityCliente : AppCompatActivity() , NavigationView.OnNavigationIte
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId){
+        when (item.itemId) {
             R.id.ap_inicio_c -> {
                 replaceFragment(FragmentInicioC())
             }
@@ -63,7 +84,7 @@ class MainActivityCliente : AppCompatActivity() , NavigationView.OnNavigationIte
                 replaceFragment(FragmentMiPerfilC())
             }
             R.id.ap_cerrar_sesion_c -> {
-                Toast.makeText(applicationContext, "Se ha cerrado sesión del Cliente", Toast.LENGTH_SHORT).show()
+                cerrarSesion()
             }
             R.id.ap_tienda_c -> {
                 replaceFragment(FragmentTiendaC())

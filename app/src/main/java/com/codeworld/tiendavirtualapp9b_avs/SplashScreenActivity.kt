@@ -22,7 +22,6 @@ class SplashScreenActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
 
         verBienvenida()
-
     }
 
     private fun verBienvenida() {
@@ -32,41 +31,40 @@ class SplashScreenActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
-                //startActivity(Intent(applicationContext, MainActivityVendedor::class.java))
-                //finishAffinity()
                 comprobarTipoUsuario()
             }
-
         }.start()
     }
 
     private fun comprobarTipoUsuario() {
         val firebaseUser = firebaseAuth.currentUser
 
-        if (firebaseUser == null){
-            startActivity(Intent(this, MainActivityVendedor::class.java))
+        if (firebaseUser == null) {
+            // AQUÍ ESTÁ EL CAMBIO: Si no hay usuario en línea, redirige a la selección de tipo
+            startActivity(Intent(this@SplashScreenActivity, SeleccionarTipoMainActivity::class.java))
+            finishAffinity()
         } else {
             val reference = FirebaseDatabase.getInstance().getReference("Usuarios")
             reference.child(firebaseUser.uid)
-                .addListenerForSingleValueEvent(object : ValueEventListener{
+                .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        val tipoU = snapshot.child("tipoUsuario").value
+                        val tipoU = snapshot.child("tipoUsuario").value.toString()
 
                         if (tipoU == "Vendedor") {
                             startActivity(Intent(this@SplashScreenActivity, MainActivityVendedor::class.java))
                             finishAffinity()
-                        }else{
+                        } else {
                             startActivity(Intent(this@SplashScreenActivity, MainActivityCliente::class.java))
                             finishAffinity()
                         }
                     }
 
                     override fun onCancelled(error: DatabaseError) {
-                        TODO("Not yet implemented")
+                        // En caso de cancelación o error, envía a la pantalla de selección
+                        startActivity(Intent(this@SplashScreenActivity, SeleccionarTipoMainActivity::class.java))
+                        finishAffinity()
                     }
-
                 })
         }
     }
-
 }
