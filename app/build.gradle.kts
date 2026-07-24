@@ -45,10 +45,14 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.lottie)/*Animaciones Lootie */
-    implementation(libs.firebaseAuth)/*Aunteticacion con Firebase */
+    implementation(libs.firebaseAuth)/*Autenticacion con Firebase */
     implementation(libs.firebaseDatabase)
     implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)/*Base de datos de Firebase */
+    implementation(libs.androidx.navigation.ui.ktx)
+
+    // Firebase Storage agregado directamente
+    implementation("com.google.firebase:firebase-storage-ktx:21.0.0")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

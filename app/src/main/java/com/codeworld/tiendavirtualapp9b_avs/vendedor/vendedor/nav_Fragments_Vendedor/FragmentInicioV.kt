@@ -6,14 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.codeworld.tiendavirtualapp9b_avs.R
 import com.codeworld.tiendavirtualapp9b_avs.databinding.FragmentInicioVBinding
 import com.codeworld.tiendavirtualapp9b_avs.vendedor.vendedor.Bottom_Nav_Fragment.FragmentMisOrdenesV
 import com.codeworld.tiendavirtualapp9b_avs.vendedor.vendedor.Bottom_Nav_Fragment.FragmentMisProductosV
 
 class FragmentInicioV : Fragment() {
-
 
     private lateinit var binding : FragmentInicioVBinding
     private lateinit var mContext : Context
@@ -22,7 +20,6 @@ class FragmentInicioV : Fragment() {
         mContext = context
         super.onAttach(context)
     }
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentInicioVBinding.inflate(inflater, container, false)
@@ -41,19 +38,21 @@ class FragmentInicioV : Fragment() {
         replaceFragment(FragmentMisProductosV())
         binding.bottomNavigation.selectedItemId = R.id.ap_mis_productos_v
 
-        binding.addFab.setOnClickListener{
-            Toast.makeText(mContext, "Presionaste Agregar Productos (botón flotante)", Toast.LENGTH_SHORT).show()
+        // Navegación con el botón flotante (FAB)
+        binding.addFab.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.navFragment, FragmentAgregarProductoV())
+                .addToBackStack(null)
+                .commit()
         }
 
         return binding.root
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        parentFragmentManager
+        childFragmentManager
             .beginTransaction()
             .replace(R.id.bottomFragment, fragment)
             .commit()
-
     }
 }
-

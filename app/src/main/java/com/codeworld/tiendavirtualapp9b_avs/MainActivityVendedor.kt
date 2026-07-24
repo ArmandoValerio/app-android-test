@@ -19,6 +19,7 @@ import com.codeworld.tiendavirtualapp9b_avs.vendedor.vendedor.LoginVendedorActiv
 import com.codeworld.tiendavirtualapp9b_avs.vendedor.vendedor.nav_Fragments_Vendedor.FragmentMiTiendaV
 import com.codeworld.tiendavirtualapp9b_avs.vendedor.vendedor.nav_Fragments_Vendedor.FragmentReseniasV
 import com.codeworld.tiendavirtualapp9b_avs.vendedor.vendedor.RegistroVendedorActivity
+import com.codeworld.tiendavirtualapp9b_avs.vendedor.vendedor.nav_Fragments_Vendedor.FragmentAgregarProductoV
 import com.codeworld.tiendavirtualapp9b_avs.vendedor.vendedor.nav_Fragments_Vendedor.FragmentInicioV
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -85,7 +86,7 @@ class MainActivityVendedor : AppCompatActivity(), NavigationView.OnNavigationIte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.ap_inicio_v ->{
+            R.id.ap_inicio_v -> {
                 replaceFragment(FragmentInicioV())
             }
             R.id.ap_mi_tienda_v -> {
@@ -96,7 +97,6 @@ class MainActivityVendedor : AppCompatActivity(), NavigationView.OnNavigationIte
             }
             R.id.ap_cerrar_sesion_v -> {
                 cerrarSesion()
-                //Toast.makeText(applicationContext, "Saliste de la aplicación", Toast.LENGTH_SHORT).show()
             }
             R.id.ap_mis_productos_v -> {
                 replaceFragment(FragmentMisProductosV())
@@ -104,7 +104,6 @@ class MainActivityVendedor : AppCompatActivity(), NavigationView.OnNavigationIte
             R.id.ap_mis_ordenes_v -> {
                 replaceFragment(FragmentMisOrdenesV())
             }
-
         }
         binding.drawerLayout.closeDrawer(GravityCompat.START)
         return true
